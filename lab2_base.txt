@@ -1,0 +1,192 @@
+1.function hasTwoCubeSums(n) {
+	const cubes = new Map();
+  const limit = Math.round(Math.cbrt(n)) + 1;
+
+  for (let a = 1; a < limit; a++) {
+    for (let b = a + 1; b < limit; b++) {
+      const sum = a ** 3 + b ** 3;
+      if (sum === n) {
+        if (cubes.has(sum)) {
+          const [prevA, prevB] = cubes.get(sum);
+          if (new Set([prevA, prevB, a, b]).size === 4) {
+            return true;
+          }
+        } else {
+          cubes.set(sum, [a, b]);
+        }
+      }
+    }
+  }
+  return false;
+}
+
+
+
+2. function ipv4Parser(ip, mask){
+  const ipOctets = ip.split('.').map(Number);
+  const maskOctets = mask.split('.').map(Number);
+
+  const network = ipOctets.map((octet, i) => octet & maskOctets[i]).join('.');
+  const host = ipOctets.map((octet, i) => octet & (~maskOctets[i] & 255)).join('.');
+
+  return [network, host];
+}
+
+
+
+3. function whatCentury(year) {
+  let century = Math.ceil(year / 100);
+  let suffix = 'th';
+
+  if (century % 10 === 1 && century % 100 !== 11) {
+    suffix = 'st';
+  } else if (century % 10 === 2 && century % 100 !== 12) {
+    suffix = 'nd';
+  } else if (century % 10 === 3 && century % 100 !== 13) {
+    suffix = 'rd';
+  }
+
+  return century + suffix;
+}
+
+
+
+4. function findMissing(arr) {
+  const n = arr.length;
+  const d = (arr[n - 1] - arr[0]) / n;
+  for (let i = 0; i < n - 1; i++) {
+    if (arr[i + 1] - arr[i] !== d) {
+      return arr[i] + d;
+    }
+  }
+  return null;
+}
+
+
+
+5. function primeFactors(n) {
+  let result = "";
+  let factor = 2;
+
+  while (n > 1) {
+    let count = 0;
+    while (n % factor === 0) {
+      n /= factor;
+      count++;
+    }
+    if (count > 0) {
+      result += count === 1 ? `(${factor})` : `(${factor}**${count})`;
+    }
+    factor++;
+  }
+
+  return result;
+}
+
+
+
+6. function toWeirdCase(string) {
+  return string
+    .split(" ")
+    .map(word =>
+      word
+        .split("")
+        .map((ch, i) => (i % 2 === 0 ? ch.toUpperCase() : ch.toLowerCase()))
+        .join("")
+    )
+    .join(" ");
+}
+
+
+
+7. function wave(str) {
+  let result = [];
+  for (let i = 0; i < str.length; i++) {
+    if (str[i] === " ") continue;
+    let waveStr = str.slice(0, i) + str[i].toUpperCase() + str.slice(i + 1);
+    result.push(waveStr);
+  }
+  return result;
+}
+
+
+
+8. function expandedForm(num) {
+  return String(num)
+    .split("")
+    .map((digit, i, arr) => {
+      let zeros = arr.length - i - 1;
+      return digit !== "0" ? digit + "0".repeat(zeros) : null;
+    })
+    .filter(Boolean)
+    .join(" + ");  
+}
+
+
+
+9. function solution(str){
+  if (str.length % 2 !== 0) str += "_";
+  let result = [];
+  for (let i = 0; i < str.length; i += 2) {
+    result.push(str[i] + str[i+1]);
+  }
+  return result;
+}
+
+
+
+10. function bingo(ticket, win){
+  let miniWins = 0;
+
+  for (let [str, num] of ticket) {
+    if (str.split("").some(ch => ch.charCodeAt(0) === num)) {
+      miniWins++;
+    }
+  }
+  return miniWins >= win ? "Winner!" : "Loser!";
+}
+
+
+
+11. function domainName(url){
+  return url
+    .replace("http://", "")
+    .replace("https://", "")
+    .replace("www.", "")
+    .split(".")[0];
+}
+
+
+
+12. function longest(arr, n) {
+  return arr
+    .map((str, i) => ({ str, len: str.length, idx: i }))
+    .sort((a, b) => b.len - a.len || a.idx - b.idx)
+    [n - 1].str;
+}
+
+
+
+13. function hexStringToRGB(hexString) {
+    const hex = hexString.replace('#', '');
+    const r = parseInt(hex.slice(0, 2), 16);
+    const g = parseInt(hex.slice(2, 4), 16);
+    const b = parseInt(hex.slice(4, 6), 16);
+    return { r, g, b };
+}
+
+
+
+14. function isCircleSorted( arr ){
+  let count = 0;
+  const n = arr.length;
+  for(let i = 0; i < n; i++) {
+    if(arr[i] > arr[(i+1) % n]) {
+      count++;
+      if(count > 1) {
+        return false;
+      }
+    }
+  }
+  return true;
+}
